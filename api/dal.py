@@ -27,3 +27,13 @@ async def obtener_autos(db: AsyncSession):
     result = await db.execute(
 select(models.Auto).options(selectinload(models.Auto.venta)) )
     return result.scalars().all()
+async def crear_marca(db: AsyncSession, marca:
+schemas.MarcaCreateRequest):
+    nuevo_marca = models.Marca(**marca.dict())
+    db.add(nuevo_marca)
+    await db.commit()
+    await db.refresh(nuevo_marca)
+    return nuevo_marca
+async def obtener_marca(db: AsyncSession): 
+    result = await db.execute(select(models.Marca))
+    return result.scalars().all()
