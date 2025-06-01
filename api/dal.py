@@ -37,3 +37,23 @@ schemas.MarcaCreateRequest):
 async def obtener_marca(db: AsyncSession): 
     result = await db.execute(select(models.Marca))
     return result.scalars().all()
+async def crear_color(db: AsyncSession, color:
+schemas.ColorCreateRequest):
+    nuevo_color = models.Color(**color.dict())
+    db.add(nuevo_color)
+    await db.commit()
+    await db.refresh(nuevo_color)
+    return nuevo_color
+async def obtener_color(db: AsyncSession): 
+    result = await db.execute(select(models.Color))
+    return result.scalars().all()
+async def crear_modelo(db: AsyncSession, modelo:
+schemas.ModeloCreateRequest):
+    nuevo_modelo = models.Modelo(**modelo.dict())
+    db.add(nuevo_modelo)
+    await db.commit()
+    await db.refresh(nuevo_modelo)
+    return nuevo_modelo
+async def obtener_modelo(db: AsyncSession): 
+    result = await db.execute(select(models.Modelo))
+    return result.scalars().all()
