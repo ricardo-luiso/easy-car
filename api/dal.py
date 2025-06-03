@@ -16,7 +16,7 @@ schemas.AutoCreateRequest):
     await db.commit()
     await db.refresh(nuevo_auto)
     result = await db.execute(
-    select(models.Auto).options(selectinload(models.Auto.venta)).where(models.Auto.id == nuevo_auto.id)
+    select(models.Auto).options(selectinload(models.Auto.venta)).where(models.Auto.id == nuevo_auto.id)#mirar si añadir
 )
     auto_con_relacion = result.scalar_one()
     return auto_con_relacion
@@ -56,4 +56,34 @@ schemas.ModeloCreateRequest):
     return nuevo_modelo
 async def obtener_modelo(db: AsyncSession): 
     result = await db.execute(select(models.Modelo))
+    return result.scalars().all()
+async def crear_estadov(db: AsyncSession, estado:
+schemas.Estado_VehiculoCreateRequest):
+    nuevo_estado = models.Estado_vehículo(**estado.dict())
+    db.add(nuevo_estado)
+    await db.commit()
+    await db.refresh(nuevo_estado)
+    return nuevo_estado
+async def obtener_estadov(db: AsyncSession): 
+    result = await db.execute(select(models.Estado_vehículo))
+    return result.scalars().all()
+async def crear_combustible(db: AsyncSession, combustible:
+schemas.Tipo_CombustibleCreateRequest):
+    nuevo_combustible = models.Estado_vehículo(**combustible.dict())
+    db.add(nuevo_combustible)
+    await db.commit()
+    await db.refresh(nuevo_combustible)
+    return nuevo_combustible
+async def obtener_combustible(db: AsyncSession): 
+    result = await db.execute(select(models.Tipo_combustible))
+    return result.scalars().all()
+async def crear_combustible(db: AsyncSession, combustible:
+schemas.Tipo_CombustibleCreateRequest):
+    nuevo_combustible = models.Estado_vehículo(**combustible.dict())
+    db.add(nuevo_combustible)
+    await db.commit()
+    await db.refresh(nuevo_combustible)
+    return nuevo_combustible
+async def obtener_combustible(db: AsyncSession): 
+    result = await db.execute(select(models.Tipo_combustible))
     return result.scalars().all()
