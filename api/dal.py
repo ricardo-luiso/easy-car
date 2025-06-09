@@ -58,7 +58,7 @@ async def obtener_modelo(db: AsyncSession):
     result = await db.execute(select(models.Modelo))
     return result.scalars().all()
 async def crear_estadov(db: AsyncSession, estado:
-schemas.Estado_VehiculoCreateRequest):
+schemas.Estado_vehiculoCreateRequest):
     nuevo_estado = models.Estado_vehículo(**estado.dict())
     db.add(nuevo_estado)
     await db.commit()
@@ -68,22 +68,42 @@ async def obtener_estadov(db: AsyncSession):
     result = await db.execute(select(models.Estado_vehículo))
     return result.scalars().all()
 async def crear_combustible(db: AsyncSession, combustible:
-schemas.Tipo_CombustibleCreateRequest):
+schemas.Tipo_combustibleCreateRequest):
     nuevo_combustible = models.Estado_vehículo(**combustible.dict())
     db.add(nuevo_combustible)
     await db.commit()
     await db.refresh(nuevo_combustible)
     return nuevo_combustible
-async def obtener_combustible(db: AsyncSession): 
+async def obtener_combustibles(db: AsyncSession): 
     result = await db.execute(select(models.Tipo_combustible))
     return result.scalars().all()
-async def crear_combustible(db: AsyncSession, combustible:
-schemas.Tipo_CombustibleCreateRequest):
-    nuevo_combustible = models.Estado_vehículo(**combustible.dict())
-    db.add(nuevo_combustible)
+async def crear_vendedor(db: AsyncSession, vendedor:
+schemas.VendedorCreateRequest):
+    nuevo_vendedor = models.Estado_vehículo(**vendedor.dict())
+    db.add(nuevo_vendedor)
     await db.commit()
-    await db.refresh(nuevo_combustible)
-    return nuevo_combustible
-async def obtener_combustible(db: AsyncSession): 
-    result = await db.execute(select(models.Tipo_combustible))
+    await db.refresh(nuevo_vendedor)
+    return nuevo_vendedor
+async def obtener_vendedores(db: AsyncSession): 
+    result = await db.execute(select(models.Vendedor))
+    return result.scalars().all()
+async def crear_cliente(db: AsyncSession, cliente:
+schemas.VendedorCreateRequest):
+    nuevo_cliente = models.Estado_vehículo(**cliente.dict())
+    db.add(nuevo_cliente)
+    await db.commit()
+    await db.refresh(nuevo_cliente)
+    return nuevo_cliente
+async def obtener_clientes(db: AsyncSession): 
+    result = await db.execute(select(models.Vendedor))
+    return result.scalars().all()
+async def crear_metodo(db: AsyncSession, metodo:
+schemas.VendedorCreateRequest):
+    nuevo_metodo = models.Estado_vehículo(**metodo.dict())
+    db.add(nuevo_metodo)
+    await db.commit()
+    await db.refresh(nuevo_metodo)
+    return nuevo_metodo
+async def obtener_metodos(db: AsyncSession): 
+    result = await db.execute(select(models.Vendedor))
     return result.scalars().all()

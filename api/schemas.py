@@ -11,9 +11,9 @@ class MarcaCreateRequest(BaseModel):
     nombre: str
 class ColorCreateRequest(BaseModel):
     nombre: str
-class Tipo_CombustibleCreateRequest(BaseModel):
+class Tipo_combustibleCreateRequest(BaseModel):
     nombre: str
-class Estado_VehiculoCreateRequest(BaseModel):
+class Estado_vehiculoCreateRequest(BaseModel):
     nombre: str
 class ModeloCreateRequest(BaseModel):
     nombre: str
@@ -21,7 +21,7 @@ class VendedorCreateRequest(BaseModel):
     nombre: str            
 class ClienteCreateRequest(BaseModel):
     nombre: str
-class Metódo_pagoCreateRequest(BaseModel):
+class Metodo_pagoCreateRequest(BaseModel):
     nombre: str
 class Estado_ventaCreateRequest(BaseModel):
     nombre: str
@@ -49,12 +49,12 @@ class ColorResponse(BaseModel):
     nombre: Optional[str]
 class Config:
     orm_mode = True
-class tipo_combustibleResponse(BaseModel):
+class Tipo_combustibleResponse(BaseModel):
     id: int
     nombre: Optional[str]
 class Config:
     orm_mode = True
-class EstadoResponse(BaseModel):
+class Estado_vehiculoResponse(BaseModel):
     id: int
     nombre: Optional[str]
 class Config:
@@ -69,7 +69,7 @@ class ClienteResponse(BaseModel):
     nombre: Optional[str]
 class Config:
     orm_mode = True 
-class metódo_pagoResponse(BaseModel):
+class Metodo_pagoResponse(BaseModel):
     id: int
     nombre: Optional[str]
 class Config:
