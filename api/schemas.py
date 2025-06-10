@@ -72,6 +72,7 @@ class Config:
 class ModeloResponse(BaseModel):
     id: int
     nombre: Optional[str]
+    marca: MarcaResponse
 class Config:
     orm_mode = True   
 
