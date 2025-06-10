@@ -12,3 +12,9 @@ AsyncSession = Depends(get_db)):
 @router.get("/", response_model=list[schemas.ClienteResponse]) 
 async def listar(db: AsyncSession = Depends(get_db)):
     return await dal.obtener_clientes(db)
+@router.put("/", response_model=list[schemas.ClienteResponse]) 
+async def actualizar(db: AsyncSession = Depends(get_db)):
+    return await dal.modificar_cliente(db)
+@router.delete("/", response_model=list[schemas.ClienteResponse]) 
+async def borrar(db: AsyncSession = Depends(get_db)):
+    return await dal.eliminar_cliente(db)
