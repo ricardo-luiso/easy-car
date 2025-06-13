@@ -3,3 +3,9 @@ requirements.txt
 README.md
 api/__pycache__/
 api/routers/__pycache__/
+api/routers/autos/__pycache__/
+api/routers/ventas/__pycache__/
+frontend/
+alembic/__pycache__/
+alembic/versions/__pycache__/
+alembic/README

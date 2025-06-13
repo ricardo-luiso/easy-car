@@ -27,7 +27,7 @@ class Tipo_combustible(Base):
     nombre = Column(String, nullable=False)
 
 class Estado_vehiculo(Base):
-    __tablename__ = "estadoa"
+    __tablename__ = "estado"
     id = Column(Integer, primary_key=True, index=True)
     nombre = Column(String, nullable=False)
 
