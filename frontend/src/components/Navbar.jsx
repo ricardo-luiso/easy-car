@@ -1,4 +1,8 @@
+import { useNavigate } from "react-router-dom";
+
 const Navbar = () => {
+  const navigate = useNavigate();
+
   return (
     <>
       <nav>
@@ -17,11 +21,38 @@ const Navbar = () => {
           </li>
 
           <li className="text-cyan-600">
-            <a href="/autos">Autos</a>
+            <button
+              className="hover:cursor-pointer"
+              onClick={() => navigate("/admin")}
+            >
+              Panel Administrador
+            </button>
           </li>
+
           <li className="text-cyan-600">
-            <a href="/ventas">Ventas</a>
+            <button
+              className="hover:cursor-pointer"
+              onClick={() => navigate("/dashboard")}
+            >
+              Autos
+            </button>
           </li>
+
+          <li className="text-cyan-600">
+            <button
+              className="hover:cursor-pointer"
+              onClick={() => navigate("/dashboard")}
+            >
+              Ventas
+            </button>
+          </li>
+
+          <button
+            className="bg-red-600 rounded-md text-white p-2 hover:cursor-pointer hover:bg-red-500"
+            onClick={() => navigate("/")}
+          >
+            Cerrar Sesion
+          </button>
         </ul>
       </nav>
     </>
