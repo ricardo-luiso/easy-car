@@ -67,3 +67,10 @@ class Estado_venta(Base):
     __tablename__ = "estadov"
     id = Column(Integer, primary_key=True, index=True)
     nombre = Column(String, nullable=False)
+class Usuario(Base):
+    __tablename__= "usuario"
+    id = Column(Integer, primary_key=True, index=True)
+    nombre = Column(String, nullable=False)
+    apellido = Column(String, nullable=False)
+    mail = Column(String, nullable=False)
+    contrasena = Column(String, nullable=False)

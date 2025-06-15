@@ -251,14 +251,38 @@ async def obtener_metodos(db: AsyncSession):
     result = await db.execute(select(models.Metodo_pago))
     return result.scalars().all()
 
-async def modificar_metodo(db: AsyncSession, auto): 
+async def modificar_metodo(db: AsyncSession, metodo): 
     result = await db.execute(
-    select(models.Metodo_pago).options(selectinload(models.Metodo_pago)).where(models.Metodo_pago.id == auto)
+    select(models.Metodo_pago).options(selectinload(models.Metodo_pago)).where(models.Metodo_pago.id == metodo)
 )
     return result.scalars().all()
 
 async def eliminar_metodo(db: AsyncSession, metodo): 
     result = await db.execute(
     select(models.Metodo_pago).options(selectinload(models.Metodo_pago)).where(models.Metodo_pago.id == metodo)
+)
+    return result.scalars().all()
+
+async def crear_usuario(db: AsyncSession, usuario:
+schemas.UsuarioCreateRequest):
+    nuevo_usuario = models.Usuario(**usuario.dict())
+    db.add(nuevo_usuario)
+    await db.commit()
+    await db.refresh(nuevo_usuario)
+    return nuevo_usuario
+
+async def obtener_usuarios(db: AsyncSession): 
+    result = await db.execute(select(models.Usuario))
+    return result.scalars().all()
+
+async def modificar_usuario(db: AsyncSession, usuario): 
+    result = await db.execute(
+    select(models.Usuario).options(selectinload(models.Usuario)).where(models.Usuario.id == usuario)
+)
+    return result.scalars().all()
+
+async def eliminar_usuario(db: AsyncSession, usuario): 
+    result = await db.execute(
+    select(models.Usuario).options(selectinload(models.Usuario)).where(models.Usuario.id == usuario)
 )
     return result.scalars().all()
