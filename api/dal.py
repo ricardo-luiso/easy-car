@@ -2,6 +2,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
 from api import models, schemas
+from fastapi import HTTPException
+import api.auth as auth
 
 async def crear_venta(db: AsyncSession, venta:
 schemas.VentaCreateRequest):
@@ -11,17 +13,17 @@ schemas.VentaCreateRequest):
     await db.refresh(nuevo_venta)
     return nuevo_venta
 
-async def obtener_ventas(db: AsyncSession): 
+async def obtener_ventas(db: AsyncSession):
     result = await db.execute(select(models.Venta))
     return result.scalars().all()
 
-async def modificar_venta(db: AsyncSession, venta): 
+async def modificar_venta(db: AsyncSession, venta):
     result = await db.execute(
     select(models.Auto).options(selectinload(models.Venta)).where(models.Venta.id == venta)
 )
     return result.scalars().all()
 
-async def eliminar_venta(db: AsyncSession, venta): 
+async def eliminar_venta(db: AsyncSession, venta):
     result = await db.execute(
     select(models.Auto).options(selectinload(models.Venta)).where(models.Venta.id == venta)
 )
@@ -40,16 +42,16 @@ schemas.AutoCreateRequest):
     return auto_con_relacion
 async def obtener_autos(db: AsyncSession):
     result = await db.execute(
-select(models.Auto).options(selectinload(models.Auto)) )
+select(models.Auto).options(selectinload(models.Auto)))
     return result.scalars().all()
 
-async def modificar_auto(db: AsyncSession, auto): 
+async def modificar_auto(db: AsyncSession, auto):
     result = await db.execute(
     select(models.Auto).options(selectinload(models.Auto)).where(models.Auto.id == auto)
 )
     return result.scalars().all()
 
-async def eliminar_auto(db: AsyncSession, auto): 
+async def eliminar_auto(db: AsyncSession, auto):
     result = await db.execute(
     select(models.Auto).options(selectinload(models.Auto)).where(models.Auto.id == auto)
 )
@@ -62,17 +64,17 @@ schemas.MarcaCreateRequest):
     await db.commit()
     await db.refresh(nuevo_marca)
     return nuevo_marca
-async def obtener_marca(db: AsyncSession): 
+async def obtener_marca(db: AsyncSession):
     result = await db.execute(select(models.Marca))
     return result.scalars().all()
 
-async def modificar_marca(db: AsyncSession, marca): 
+async def modificar_marca(db: AsyncSession, marca):
     result = await db.execute(
     select(models.Marca).options(selectinload(models.Auto)).where(models.Auto.id == marca)
 )
     return result.scalars().all()
 
-async def eliminar_marca(db: AsyncSession, marca): 
+async def eliminar_marca(db: AsyncSession, marca):
     result = await db.execute(
     select(models.Marca).options(selectinload(models.Marca)).where(models.Marca.id == marca)
 )
@@ -85,17 +87,17 @@ schemas.ColorCreateRequest):
     await db.commit()
     await db.refresh(nuevo_color)
     return nuevo_color
-async def obtener_color(db: AsyncSession): 
+async def obtener_color(db: AsyncSession):
     result = await db.execute(select(models.Color))
     return result.scalars().all()
 
-async def modificar_color(db: AsyncSession, color): 
+async def modificar_color(db: AsyncSession, color):
     result = await db.execute(
     select(models.Color).options(selectinload(models.Color)).where(models.Color.id == color)
 )
     return result.scalars().all()
 
-async def eliminar_color(db: AsyncSession, color): 
+async def eliminar_color(db: AsyncSession, color):
     result = await db.execute(
     select(models.Color).options(selectinload(models.Color)).where(models.Color.id == color)
 )
@@ -107,17 +109,17 @@ schemas.ModeloCreateRequest):
     await db.commit()
     await db.refresh(nuevo_modelo)
     return nuevo_modelo
-async def obtener_modelo(db: AsyncSession): 
+async def obtener_modelo(db: AsyncSession):
     result = await db.execute(select(models.Modelo))
     return result.scalars().all()
 
-async def modificar_modelo(db: AsyncSession, modelo): 
+async def modificar_modelo(db: AsyncSession, modelo):
     result = await db.execute(
     select(models.Modelo).options(selectinload(models.Modelo)).where(models.Modelo.id == modelo)
 )
     return result.scalars().all()
 
-async def eliminar_modelo(db: AsyncSession, modelo): 
+async def eliminar_modelo(db: AsyncSession, modelo):
     result = await db.execute(
     select(models.Modelo).options(selectinload(models.Modelo)).where(models.Modelo.id == modelo)
 )
@@ -130,17 +132,17 @@ schemas.Estado_vehiculoCreateRequest):
     await db.commit()
     await db.refresh(nuevo_estado)
     return nuevo_estado
-async def obtener_estadovehiculo(db: AsyncSession): 
+async def obtener_estadovehiculo(db: AsyncSession):
     result = await db.execute(select(models.Estado_vehiculo))
     return result.scalars().all()
 
-async def modificar_estadovehiculo(db: AsyncSession, estado): 
+async def modificar_estadovehiculo(db: AsyncSession, estado):
     result = await db.execute(
     select(models.Estado_vehiculo).options(selectinload(models.Estado_vehiculo)).where(models.Estado_vehiculo.id == estado)
 )
     return result.scalars().all()
 
-async def eliminar_estadovehiculo(db: AsyncSession, estado): 
+async def eliminar_estadovehiculo(db: AsyncSession, estado):
     result = await db.execute(
     select(models.Estado_venta).options(selectinload(models.Estado_vehiculo)).where(models.Estado_vehiculo.id == estado)
 )
@@ -153,17 +155,17 @@ schemas.Estado_vehiculoCreateRequest):
     await db.commit()
     await db.refresh(nuevo_estado)
     return nuevo_estado
-async def obtener_estadoventa(db: AsyncSession): 
+async def obtener_estadoventa(db: AsyncSession):
     result = await db.execute(select(models.Estado_venta))
     return result.scalars().all()
 
-async def modificar_estadoventa(db: AsyncSession, estado): 
+async def modificar_estadoventa(db: AsyncSession, estado):
     result = await db.execute(
     select(models.Estado_venta).options(selectinload(models.Estado_venta)).where(models.Estado_venta.id == estado)
 )
     return result.scalars().all()
 
-async def eliminar_estadoventa(db: AsyncSession, estado): 
+async def eliminar_estadoventa(db: AsyncSession, estado):
     result = await db.execute(
     select(models.Estado_venta).options(selectinload(models.Estado_venta)).where(models.Estado_venta.id == estado)
 )
@@ -176,17 +178,17 @@ schemas.Tipo_combustibleCreateRequest):
     await db.commit()
     await db.refresh(nuevo_combustible)
     return nuevo_combustible
-async def obtener_combustibles(db: AsyncSession): 
+async def obtener_combustibles(db: AsyncSession):
     result = await db.execute(select(models.Tipo_combustible))
     return result.scalars().all()
 
-async def modificar_combustible(db: AsyncSession, combustible): 
+async def modificar_combustible(db: AsyncSession, combustible):
     result = await db.execute(
     select(models.Tipo_combustible).options(selectinload(models.Estado_venta)).where(models.Estado_venta.id == combustible)
 )
     return result.scalars().all()
 
-async def eliminar_combustible(db: AsyncSession, combustible): 
+async def eliminar_combustible(db: AsyncSession, combustible):
     result = await db.execute(
     select(models.Tipo_combustible).options(selectinload(models.Tipo_combustible)).where(models.Tipo_combustible.id == combustible)
 )
@@ -199,17 +201,17 @@ schemas.VendedorCreateRequest):
     await db.commit()
     await db.refresh(nuevo_vendedor)
     return nuevo_vendedor
-async def obtener_vendedores(db: AsyncSession): 
+async def obtener_vendedores(db: AsyncSession):
     result = await db.execute(select(models.Vendedor))
     return result.scalars().all()
 
-async def modificar_vendedor(db: AsyncSession, vendedor): 
+async def modificar_vendedor(db: AsyncSession, vendedor):
     result = await db.execute(
     select(models.Auto).options(selectinload(models.Auto)).where(models.Auto.id == vendedor)
 )
     return result.scalars().all()
 
-async def eliminar_vendedor(db: AsyncSession, vendedor): 
+async def eliminar_vendedor(db: AsyncSession, vendedor):
     result = await db.execute(
     select(models.Auto).options(selectinload(models.Vendedor)).where(models.Vendedor.id == vendedor)
 )
@@ -223,17 +225,17 @@ schemas.ClienteCreateRequest):
     await db.refresh(nuevo_cliente)
     return nuevo_cliente
 
-async def obtener_clientes(db: AsyncSession): 
+async def obtener_clientes(db: AsyncSession):
     result = await db.execute(select(models.Cliente))
     return result.scalars().all()
 
-async def modificar_cliente(db: AsyncSession, cliente): 
+async def modificar_cliente(db: AsyncSession, cliente):
     result = await db.execute(
     select(models.Cliente).options(selectinload(models.Cliente)).where(models.Cliente.id == cliente)
 )
     return result.scalars().all()
 
-async def eliminar_cliente(db: AsyncSession, cliente): 
+async def eliminar_cliente(db: AsyncSession, cliente):
     result = await db.execute(
     select(models.Cliente).options(selectinload(models.Cliente)).where(models.Cliente.id == cliente)
 )
@@ -247,42 +249,41 @@ schemas.Metodo_pagoCreateRequest):
     await db.refresh(nuevo_metodo)
     return nuevo_metodo
 
-async def obtener_metodos(db: AsyncSession): 
+async def obtener_metodos(db: AsyncSession):
     result = await db.execute(select(models.Metodo_pago))
     return result.scalars().all()
 
-async def modificar_metodo(db: AsyncSession, metodo): 
+async def modificar_metodo(db: AsyncSession, metodo):
     result = await db.execute(
     select(models.Metodo_pago).options(selectinload(models.Metodo_pago)).where(models.Metodo_pago.id == metodo)
 )
     return result.scalars().all()
 
-async def eliminar_metodo(db: AsyncSession, metodo): 
+async def eliminar_metodo(db: AsyncSession, metodo):
     result = await db.execute(
     select(models.Metodo_pago).options(selectinload(models.Metodo_pago)).where(models.Metodo_pago.id == metodo)
 )
+    await db.delete(result)
+    db.commit()
     return result.scalars().all()
 
-async def crear_usuario(db: AsyncSession, usuario:
-schemas.UsuarioCreateRequest):
+async def inicio_usuario(db: AsyncSession, usuario: schemas.UsuarioCreateRequest):
+    db_user = db.query(models.Usuario).filter_by(nombre=usuario.apodo).first()
+    if not db_user or not auth.verify_password(usuario.contrasena, db_user.hash):
+        raise HTTPException(status_code=401, detail="Credenciales inválidas")
+    access_token = auth.create_access_token(data={"sub": usuario.apodo})
+    return {"access_token": access_token, "token_type": "bearer"}
+async def crear_usuario(db: AsyncSession, usuario: schemas.UsuarioCreateRequest):
+    if db.query(models.Usuario).filter_by(nombre=usuario.apodo).first():
+        raise HTTPException(status_code=400, detail="Usuario ya registrado")
+    hashed_pw = auth.get_password_hash(usuario.contrasena)
     nuevo_usuario = models.Usuario(**usuario.dict())
+    nuevo_usuario.hash=hashed_pw
     db.add(nuevo_usuario)
-    await db.commit()
-    await db.refresh(nuevo_usuario)
+    db.commit()
+    db.refresh(nuevo_usuario)
     return nuevo_usuario
 
-async def obtener_usuarios(db: AsyncSession): 
+async def obtener_usuarios(db: AsyncSession):
     result = await db.execute(select(models.Usuario))
-    return result.scalars().all()
-
-async def modificar_usuario(db: AsyncSession, usuario): 
-    result = await db.execute(
-    select(models.Usuario).options(selectinload(models.Usuario)).where(models.Usuario.id == usuario)
-)
-    return result.scalars().all()
-
-async def eliminar_usuario(db: AsyncSession, usuario): 
-    result = await db.execute(
-    select(models.Usuario).options(selectinload(models.Usuario)).where(models.Usuario.id == usuario)
-)
     return result.scalars().all()

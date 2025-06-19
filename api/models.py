@@ -70,7 +70,7 @@ class Estado_venta(Base):
 class Usuario(Base):
     __tablename__= "usuario"
     id = Column(Integer, primary_key=True, index=True)
-    nombre = Column(String, nullable=False)
-    apellido = Column(String, nullable=False)
+    apodo = Column(String, nullable=False, unique=True)
     mail = Column(String, nullable=False)
     contrasena = Column(String, nullable=False)
+    hash=Column(String, nullable=False)

@@ -41,8 +41,7 @@ class Estado_ventaCreateRequest(BaseModel):
     nombre: str
 
 class UsuarioCreateRequest(BaseModel):
-    nombre: str
-    apellido: str
+    apodo: str
     mail: str
     contrasena: str
 # RESPONSE
@@ -125,9 +124,13 @@ class Config:
 
 class UsuarioResponse(BaseModel):
     id: int
-    nombre: Optional[str]
-    apellido: Optional[str]
+    apodo: Optional[str]
     mail: Optional[str]
-    contrasena: Optional[str]
 class Config:
     orm_mode = True
+    from_attributes = True
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
