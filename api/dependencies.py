@@ -7,14 +7,13 @@ from .database import AsyncSessionLocal
 
 security = HTTPBearer()
 
-
 def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
     token = credentials.credentials.strip()
-
+    
     # Sanity check
     if token.count(".") != 2:
         raise HTTPException(status_code=401, detail="Token malformado")
-
+    
     try:
         payload = decode_access_token(token)
         username = payload.get("sub")
@@ -22,8 +21,8 @@ def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(securit
             raise HTTPException(status_code=401, detail="Token inválido")
     except JWTError:
         raise HTTPException(status_code=401, detail="Token inválido")
-
-    db = SessionLocal()
+    
+    db = AsyncSessionLocal()
     user = db.query(usuario).filter_by(username=username).first()
     db.close()
     if user is None:

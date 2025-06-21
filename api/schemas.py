@@ -60,8 +60,8 @@ class Config:
 class VentaResponse(BaseModel):
     id: int
     nombre: Optional[str]
-    Vendedor: str
-    auto: AutoResponse
+    Vendedor: Optional[str]
+    auto: Optional[AutoResponse]
     metodo:Optional[str]
     estado:Optional[str]
 class Config:
@@ -129,7 +129,6 @@ class UsuarioResponse(BaseModel):
 class Config:
     orm_mode = True
     from_attributes = True
-
 
 class Token(BaseModel):
     access_token: str

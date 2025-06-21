@@ -41,7 +41,6 @@ class Modelo(Base):
 class Venta(Base):
     __tablename__ = "venta"
     id = Column(Integer, primary_key=True, index=True)
-    carrera = Column(String, nullable=True)
     vendedor_id = Column(Integer, ForeignKey("vendedor.id"))
     cliente_id = Column(Integer, ForeignKey("cliente.id"))
     metodo_id = Column(Integer, ForeignKey("metodo.id"))
