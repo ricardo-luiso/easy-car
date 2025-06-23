@@ -7,10 +7,11 @@ class VentaCreateRequest(BaseModel):
 
 class AutoCreateRequest(BaseModel):
     nombre: Optional[str] = None
-    marca: Optional[str] = None
-    modelo: Optional[str] = None
-    combustible: Optional[str] = None
-    color: Optional[str] = None
+    marca_id: Optional[str] = None
+    modelo_id: Optional[str] = None
+    combustible_id: Optional[str] = None
+    estado_id: Optional[str] = None
+    color_id: Optional[str] = None
     imagen: Optional[str] = None
 
 class MarcaCreateRequest(BaseModel):
@@ -27,6 +28,7 @@ class Estado_vehiculoCreateRequest(BaseModel):
 
 class ModeloCreateRequest(BaseModel):
     nombre: str
+    marca_id: str
 
 class VendedorCreateRequest(BaseModel):
     nombre: str
@@ -48,12 +50,12 @@ class UsuarioCreateRequest(BaseModel):
 class AutoResponse(BaseModel):
     id: int
     nombre: Optional[str]
-    imagen: Optional[str]
-    combustible: Optional[str]
-    estado:Optional[str]
-    modelo:Optional[str]
-    color:Optional[str]
-    marca:Optional[str]
+    marca_id: Optional[str] = None
+    modelo_id: Optional[str] = None
+    combustible_id: Optional[str] = None
+    estado_id: Optional[str] = None
+    color_id: Optional[str] = None
+    imagen: Optional[str] = None
 class Config:
     orm_mode = True
 
@@ -76,7 +78,7 @@ class Config:
 class ModeloResponse(BaseModel):
     id: int
     nombre: Optional[str]
-    marca: MarcaResponse
+    marca_id: str
 class Config:
     orm_mode = True
 

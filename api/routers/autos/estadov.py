@@ -15,5 +15,5 @@ async def listar(db: AsyncSession = Depends(get_db)):
 async def actualizar(estadov: schemas.Estado_vehiculoCreateRequest, db: AsyncSession = Depends(get_db)):
     return await dal.modificar_estadovehiculo(db,estadov)
 @router.delete("/", response_model="")
-async def borrar(db: AsyncSession = Depends(get_db)):
-    return await dal.eliminar_estadovehiculo(db)
+async def borrar(estado: int,db: AsyncSession = Depends(get_db)):
+    return await dal.eliminar_estadovehiculo(db,estado)

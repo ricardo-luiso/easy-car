@@ -39,18 +39,18 @@ def upgrade() -> None:
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_combustible_id'), 'combustible', ['id'], unique=False)
-    op.create_table('estado',
+    op.create_table('estadoventa',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('nombre', sa.String(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_index(op.f('ix_estado_id'), 'estado', ['id'], unique=False)
-    op.create_table('estadov',
+    op.create_index(op.f('ix_estadoventa_id'), 'estadoventa', ['id'], unique=False)
+    op.create_table('estadovehiculo',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('nombre', sa.String(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_index(op.f('ix_estadov_id'), 'estadov', ['id'], unique=False)
+    op.create_index(op.f('ix_estadovehiculo_id'), 'estadovehiculo', ['id'], unique=False)
     op.create_table('marca',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('nombre', sa.String(), nullable=False),
@@ -87,7 +87,7 @@ def upgrade() -> None:
     sa.Column('estado_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['color_id'], ['color.id'], ),
     sa.ForeignKeyConstraint(['combustible_id'], ['combustible.id'], ),
-    sa.ForeignKeyConstraint(['estado_id'], ['estado.id'], ),
+    sa.ForeignKeyConstraint(['estado_id'], ['estadoventa.id'], ),
     sa.ForeignKeyConstraint(['marca_id'], ['marca.id'], ),
     sa.ForeignKeyConstraint(['modelo_id'], ['modelo.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -103,7 +103,7 @@ def upgrade() -> None:
     sa.Column('auto_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['auto_id'], ['auto.id'], ),
     sa.ForeignKeyConstraint(['cliente_id'], ['cliente.id'], ),
-    sa.ForeignKeyConstraint(['estado_id'], ['estado.id'], ),
+    sa.ForeignKeyConstraint(['estado_id'], ['estadoventa.id'], ),
     sa.ForeignKeyConstraint(['metodo_id'], ['metodo.id'], ),
     sa.ForeignKeyConstraint(['vendedor_id'], ['vendedor.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -127,10 +127,10 @@ def downgrade() -> None:
     op.drop_table('metodo')
     op.drop_index(op.f('ix_marca_id'), table_name='marca')
     op.drop_table('marca')
-    op.drop_index(op.f('ix_estadov_id'), table_name='estadov')
-    op.drop_table('estadov')
-    op.drop_index(op.f('ix_estado_id'), table_name='estado')
-    op.drop_table('estado')
+    op.drop_index(op.f('ix_estadovehiculo_id'), table_name='estadovehiculo')
+    op.drop_table('estadovehiculo')
+    op.drop_index(op.f('ix_estadoventa_id'), table_name='estadoventa')
+    op.drop_table('estadoventa')
     op.drop_index(op.f('ix_combustible_id'), table_name='combustible')
     op.drop_table('combustible')
     op.drop_index(op.f('ix_color_id'), table_name='color')

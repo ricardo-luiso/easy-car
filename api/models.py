@@ -10,12 +10,12 @@ class Auto(Base):
     color_id = Column(Integer, ForeignKey("color.id"))
     modelo_id = Column(Integer, ForeignKey("modelo.id"))
     combustible_id = Column(Integer, ForeignKey("combustible.id"))
-    estado_id = Column(Integer, ForeignKey("estado.id"))
+    estado_id = Column(Integer, ForeignKey("estadovehiculo.id"))
+    imagen = Column(String)
 class Marca(Base):
     __tablename__ = "marca"
     id = Column(Integer, primary_key=True, index=True)
     nombre = Column(String, nullable=False)
-    modelo = relationship("Modelo", back_populates="marca")
 class Color(Base):
     __tablename__ = "color"
     id = Column(Integer, primary_key=True, index=True)
@@ -27,7 +27,7 @@ class Tipo_combustible(Base):
     nombre = Column(String, nullable=False)
 
 class Estado_vehiculo(Base):
-    __tablename__ = "estado"
+    __tablename__ = "estadovehiculo"
     id = Column(Integer, primary_key=True, index=True)
     nombre = Column(String, nullable=False)
 
@@ -36,7 +36,6 @@ class Modelo(Base):
     id = Column(Integer, primary_key=True, index=True)
     nombre = Column(String, nullable=False)
     marca_id = Column(Integer, ForeignKey("marca.id"))
-    marca = relationship("Marca", back_populates="modelo", uselist=False)
 
 class Venta(Base):
     __tablename__ = "venta"
@@ -44,7 +43,7 @@ class Venta(Base):
     vendedor_id = Column(Integer, ForeignKey("vendedor.id"))
     cliente_id = Column(Integer, ForeignKey("cliente.id"))
     metodo_id = Column(Integer, ForeignKey("metodo.id"))
-    estado_id = Column(Integer, ForeignKey("estado.id"))
+    estado_id = Column(Integer, ForeignKey("estadoventa.id"))
     auto_id = Column(Integer, ForeignKey("auto.id"))
 
 class Vendedor(Base):
@@ -63,7 +62,7 @@ class Metodo_pago(Base):
     nombre = Column(String, nullable=False)
 
 class Estado_venta(Base):
-    __tablename__ = "estadov"
+    __tablename__ = "estadoventa"
     id = Column(Integer, primary_key=True, index=True)
     nombre = Column(String, nullable=False)
 class Usuario(Base):

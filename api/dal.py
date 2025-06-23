@@ -24,18 +24,15 @@ async def modificar_venta(db: AsyncSession, venta:schemas.VentaResponse):
     await db.commit()
     return ventam
 
-async def eliminar_venta(db: AsyncSession, venta):
-    result = await db.execute(select(models.Auto).options(selectinload(models.Venta)).where(models.Venta.id == venta))
+async def eliminar_venta(db: AsyncSession, venta:int):
+    result = await db.execute(select(models.Venta).options(selectinload(models.Venta)).where(models.Venta.id == venta))
     return result.scalars().all()
 
 async def crear_auto(db: AsyncSession, auto:schemas.AutoCreateRequest):
     nuevo_auto = models.Auto(**auto.dict())
     db.add(nuevo_auto)
     await db.commit()
-    await db.refresh(nuevo_auto)
-    result = await db.execute(select(models.Auto).options(selectinload(models.Auto)).where(models.Auto.id == nuevo_auto.id))#mirar si añadir
-    auto_con_relacion = result.scalar_one()
-    return auto_con_relacion
+    return nuevo_auto
 async def obtener_autos(db: AsyncSession):
     result = await db.execute(select(models.Auto).options(selectinload(models.Auto)))
     return result.scalars().all()
@@ -105,10 +102,13 @@ async def eliminar_color(db: AsyncSession, color:int):
 
 async def crear_modelo(db: AsyncSession, modelo:schemas.ModeloCreateRequest):
     nuevo_modelo = models.Modelo(**modelo.dict())
+
+
     db.add(nuevo_modelo)
     await db.commit()
     await db.refresh(nuevo_modelo)
     return nuevo_modelo
+
 async def obtener_modelo(db: AsyncSession):
     result = await db.execute(select(models.Modelo))
     return result.scalars().all()
@@ -145,10 +145,14 @@ async def modificar_estadovehiculo(db: AsyncSession, estado:schemas.Estado_vehic
     return estadom
 
 async def eliminar_estadovehiculo(db: AsyncSession, estado:int):
-    result = await db.execute(select(models.Estado_vehiculo).where(models.Estado_vehiculo.id == estado))
-    result=result.scalars().first()
-    await db.delete(result)
-    await db.commit()
+    try:
+        result = await db.execute(select(models.Estado_vehiculo).where(models.Estado_vehiculo.id == estado))
+        result=result.scalars().first()
+        await db.delete(result)
+        await db.commit()
+    except Exception as esx:
+        return "Error:" + esx
+        
     return "Borrado con éxito."
 
 async def crear_estadoventa(db: AsyncSession, estado:schemas.Estado_vehiculoCreateRequest):
@@ -268,28 +272,31 @@ async def modificar_metodo(db: AsyncSession, metodo:schemas.Metodo_pagoResponse)
     return metodom
 
 async def eliminar_metodo(db: AsyncSession, metodo:int):
-    result = await db.execute(select(models.Auto).where(models.Metodo_pago.id == metodo))
+    result = await db.execute(select(models.Metodo_pago).where(models.Metodo_pago.id == metodo))
     result=result.scalars().first()
     await db.delete(result)
     await db.commit()
     return "Borrado con éxito."
 
 async def inicio_usuario(db: AsyncSession, usuario: schemas.UsuarioCreateRequest):
-    db_user = db.query(models.Usuario).filter_by(nombre=usuario.apodo).first()
+    db_user = await db.execute(select(models.Usuario).where(models.Usuario.apodo == usuario.apodo))
+    db_user=db_user.scalars().first()
     if not db_user or not auth.verify_password(usuario.contrasena, db_user.hash):
         raise HTTPException(status_code=401, detail="Credenciales inválidas")
     access_token = auth.create_access_token(data={"sub": usuario.apodo})
     return {"access_token": access_token, "token_type": "bearer"}
 
 async def crear_usuario(db: AsyncSession, usuario: schemas.UsuarioCreateRequest):
-    if db.query(models.Usuario).filter_by(nombre=usuario.apodo).first():
+    db_user = await db.execute(select(models.Usuario).where(models.Usuario.apodo == usuario.apodo))
+    db_user=db_user.scalars().first()
+    if db_user != None:
         raise HTTPException(status_code=400, detail="Usuario ya registrado")
     hashed_pw = auth.get_password_hash(usuario.contrasena)
     nuevo_usuario = models.Usuario(**usuario.dict())
     nuevo_usuario.hash=hashed_pw
     db.add(nuevo_usuario)
-    db.commit()
-    db.refresh(nuevo_usuario)
+    await db.commit()
+    await db.refresh(nuevo_usuario)
     return nuevo_usuario
 
 async def obtener_usuarios(db: AsyncSession):
