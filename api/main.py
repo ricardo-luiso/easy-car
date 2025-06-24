@@ -4,7 +4,15 @@ from api.routers.autos import autos,marca,color,modelo, estadov, combustible
 import api.routers.usuario as usuario
 from api.database import Base, engine
 from .dependencies import get_current_user
+from fastapi.middleware.cors import CORSMiddleware
 api = FastAPI()
+api.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=[""],
+    allow_headers=["*"],
+)
 api.include_router(ventas.router, prefix="/ventas", tags=["ventas"])
 api.include_router(autos.router, prefix="/autos", tags=["autos"])
 api.include_router(marca.router, prefix="/marca", tags=["marca"])
