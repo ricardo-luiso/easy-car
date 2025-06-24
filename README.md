@@ -3,6 +3,7 @@ aiosqlite==0.21.0
 alembic==1.15.2
 annotated-types==0.7.0
 anyio==4.9.0
+bcrypt==4.0.1
 cffi==1.17.1
 click==8.2.0
 colorama==0.4.6

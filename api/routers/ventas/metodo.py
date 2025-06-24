@@ -15,5 +15,5 @@ async def listar(db: AsyncSession = Depends(get_db)):
 async def actualizar(metodo: schemas.Metodo_pagoCreateRequest, db: AsyncSession = Depends(get_db)):
     return await dal.modificar_metodo(db,metodo)
 @router.delete("/", response_model="")
-async def borrar(db: AsyncSession = Depends(get_db)):
-    return await dal.eliminar_metodo(db)
+async def borrar(metodo: int,db: AsyncSession = Depends(get_db)):
+    return await dal.eliminar_metodo(db,metodo)

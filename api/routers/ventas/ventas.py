@@ -15,5 +15,5 @@ async def listar(db: AsyncSession = Depends(get_db)):
 async def actualizar(venta: schemas.VentaResponse, db: AsyncSession = Depends(get_db)):
     return await dal.modificar_venta(db,venta)
 @router.delete("/", response_model="")
-async def borrar(db: AsyncSession = Depends(get_db)):
-    return await dal.eliminar_venta(db)
+async def borrar(venta: int,db: AsyncSession = Depends(get_db)):
+    return await dal.eliminar_venta(db,venta)

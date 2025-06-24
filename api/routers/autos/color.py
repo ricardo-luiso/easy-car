@@ -15,5 +15,5 @@ async def listar(db: AsyncSession = Depends(get_db)):
 async def actualizar(color: schemas.ColorCreateRequest, db: AsyncSession = Depends(get_db)):
     return await dal.modificar_color(db,color)
 @router.delete("/", response_model="")
-async def borrar(db: AsyncSession = Depends(get_db)):
-    return await dal.eliminar_color(db)
+async def borrar(color: int,db: AsyncSession = Depends(get_db)):
+    return await dal.eliminar_color(db,color)

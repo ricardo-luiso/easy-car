@@ -15,5 +15,5 @@ async def listar(db: AsyncSession = Depends(get_db)):
 async def actualizar(combustible: schemas.Tipo_combustibleCreateRequest,db: AsyncSession = Depends(get_db)):
     return await dal.modificar_combustible(db,combustible)
 @router.delete("/", response_model="")
-async def borrar(db: AsyncSession = Depends(get_db)):
-    return await dal.eliminar_combustible(db)
+async def borrar(combustible: int,db: AsyncSession = Depends(get_db)):
+    return await dal.eliminar_combustible(db,combustible)
