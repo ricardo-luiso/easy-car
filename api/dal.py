@@ -33,9 +33,16 @@ async def crear_auto(db: AsyncSession, auto:schemas.AutoCreateRequest):
     db.add(nuevo_auto)
     await db.commit()
     return nuevo_auto
-async def obtener_autos(db: AsyncSession):
-    result = await db.execute(select(models.Auto).options(selectinload(models.Auto)))
-    return result.scalars().all()
+async def obtener_autos(db: AsyncSession ,id=None):
+    if id==None:
+        result = await db.execute(select(models.Auto))
+        result = result.scalars().all()
+        return result 
+    else:
+        result = await db.execute(select(models.Auto).where(models.Auto.id == id))
+        result = result.scalars().first()
+        return result
+    
 
 async def modificar_auto(db: AsyncSession, auto:schemas.AutoResponse):
     autom = models.Auto(**auto.dict())
@@ -102,8 +109,6 @@ async def eliminar_color(db: AsyncSession, color:int):
 
 async def crear_modelo(db: AsyncSession, modelo:schemas.ModeloCreateRequest):
     nuevo_modelo = models.Modelo(**modelo.dict())
-
-
     db.add(nuevo_modelo)
     await db.commit()
     await db.refresh(nuevo_modelo)

@@ -11,6 +11,9 @@ async def crear(auto: schemas.AutoCreateRequest, db:AsyncSession = Depends(get_d
 @router.get("/", response_model=list[schemas.AutoResponse])
 async def listar(db: AsyncSession = Depends(get_db)):
     return await dal.obtener_autos(db)
+@router.get("/<id>", response_model=schemas.AutoCreateRequest)
+async def listar(id:int,db: AsyncSession = Depends(get_db)):
+    return await dal.obtener_autos(db,id)
 @router.put("/", response_model=schemas.AutoResponse)
 async def actualizar(auto: schemas.AutoResponse, db: AsyncSession = Depends(get_db)):
     return await dal.modificar_auto(db,auto)

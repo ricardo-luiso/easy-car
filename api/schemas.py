@@ -7,11 +7,11 @@ class VentaCreateRequest(BaseModel):
 
 class AutoCreateRequest(BaseModel):
     nombre: Optional[str] = None
-    marca_id: Optional[str] = None
-    modelo_id: Optional[str] = None
-    combustible_id: Optional[str] = None
-    estado_id: Optional[str] = None
-    color_id: Optional[str] = None
+    marca_id: Optional[int] = None
+    modelo_id: Optional[int] = None
+    combustible_id: Optional[int] = None
+    estado_id: Optional[int] = None
+    color_id: Optional[int] = None
     imagen: Optional[str] = None
 
 class MarcaCreateRequest(BaseModel):
@@ -50,11 +50,11 @@ class UsuarioCreateRequest(BaseModel):
 class AutoResponse(BaseModel):
     id: int
     nombre: Optional[str]
-    marca_id: Optional[str] = None
-    modelo_id: Optional[str] = None
-    combustible_id: Optional[str] = None
-    estado_id: Optional[str] = None
-    color_id: Optional[str] = None
+    marca_id: Optional[int] 
+    modelo_id: Optional[int] 
+    combustible_id: Optional[int] 
+    estado_id: Optional[int] 
+    color_id: Optional[int] 
     imagen: Optional[str] = None
 class Config:
     orm_mode = True
@@ -62,7 +62,7 @@ class Config:
 class VentaResponse(BaseModel):
     id: int
     nombre: Optional[str]
-    Vendedor: Optional[str]
+    Vendedor: Optional[int]
     auto: Optional[AutoResponse]
     metodo:Optional[str]
     estado:Optional[str]
